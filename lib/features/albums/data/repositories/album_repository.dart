@@ -11,18 +11,21 @@ class AlbumRepository {
   AlbumRepository({required this.remoteDatasource});
 
   Future<Either<Failure, List<AlbumModel>>> getTopAlbums() async {
+    Failure? failure;
     try {
       final response = await remoteDatasource.fetchTopAlbums();
 
       return Right(response);
     } on NotFoundException catch (e) {
-      return Left(NotFoundFailure(e.message));
+      failure = NotFoundFailure(e.message);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      failure = ServerFailure(e.message);
     } on UnknownException catch (e) {
-      return Left(UnknownFailure(e.message));
+      failure = UnknownFailure(e.message);
     } catch (e) {
-      return Left(UnknownFailure(e.toString()));
+      failure = UnknownFailure(e.toString());
     }
+
+    return Left(failure);
   }
 }

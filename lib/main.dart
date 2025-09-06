@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'core/extensions/fade_navigation.dart';
-import 'core/ui/ui_app_bar_title.dart';
+import 'core/ui/ui_app_bar.dart';
 import 'core/ui/ui_dimens.dart';
 import 'features/albums/data/errors/failures.dart';
 import 'features/albums/data/models/album_model.dart';
@@ -89,10 +89,7 @@ class _HomePageState extends ConsumerState<HomePage>
     final state = ref.watch(albumViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white10,
-        title: const UIAppBarTitle('Itunes albums'),
-      ),
+      appBar: const UIAppBar(title: 'Itunes albums'),
       body: RefreshIndicator(
         onRefresh: refresh,
         child: CustomScrollView(

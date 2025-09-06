@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/enums/slide_direction_enum.dart';
 import '../../../../core/ui/enums/ui_nav_button_state.dart';
+import '../../../../core/ui/ui_app_bar.dart';
 import '../../../../core/ui/ui_cached_network_image.dart';
 import '../../../../core/ui/ui_dimens.dart';
 import '../../../../core/ui/ui_nav_button.dart';
@@ -172,16 +173,7 @@ class _AlbumPageState extends State<AlbumPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     contentSpacing = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white10,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+      appBar: const UIAppBar(hasLeading: true),
       body: Stack(
         children: <Widget>[
           _DetailContentWidget(
@@ -264,11 +256,9 @@ class _DetailContentWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                UITitle(album.name),
-                UISpacingStack.xxs,
-                UIText(album.artistName),
+                _AlbumModel(album: album),
                 UISpacingStack.sm,
-                _DetailWidget(album: album),
+                _AlbumDetailWidget(album: album),
               ],
             ),
           ),
@@ -278,10 +268,28 @@ class _DetailContentWidget extends StatelessWidget {
   }
 }
 
-class _DetailWidget extends StatelessWidget {
+class _AlbumModel extends StatelessWidget {
   final AlbumModel album;
 
-  const _DetailWidget({required this.album});
+  const _AlbumModel({required this.album});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        UITitle(album.name),
+        UISpacingStack.xxs,
+        UIText(album.artistName),
+      ],
+    );
+  }
+}
+
+class _AlbumDetailWidget extends StatelessWidget {
+  final AlbumModel album;
+
+  const _AlbumDetailWidget({required this.album});
 
   @override
   Widget build(BuildContext context) {

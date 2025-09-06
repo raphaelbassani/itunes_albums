@@ -31,25 +31,31 @@ class AlbumRemoteDatasource {
         } else {
           throw UnknownException('Invalid response format');
         }
-      } else if (response.statusCode == HttpStatus.notFound) {
-        throw NotFoundException('Resource not found');
-      } else if (response.statusCode != null &&
-          response.statusCode! >= HttpStatus.internalServerError) {
-        throw ServerException('Server error with code ${response.statusCode}');
       } else {
-        throw UnknownException('Unhandled error code ${response.statusCode}');
+        _handleStatusCode(response.statusCode);
       }
     } on DioException catch (e) {
-      if (e.response?.statusCode == HttpStatus.notFound) {
-        throw NotFoundException();
-      } else if (e.response?.statusCode != null &&
-          e.response!.statusCode! >= HttpStatus.internalServerError) {
-        throw ServerException();
+      if (e.response?.statusCode != null) {
+        _handleStatusCode(e.response!.statusCode);
       } else {
         throw UnknownException(e.message ?? 'Dio error');
       }
     } catch (e) {
       throw UnknownException(e.toString());
+    }
+
+    throw UnknownException('Unhandled error');
+  }
+
+  void _handleStatusCode(int? statusCode) {
+    if (statusCode == null) {
+      throw UnknownException('No status code received');
+    } else if (statusCode == HttpStatus.notFound) {
+      throw NotFoundException('Resource not found');
+    } else if (statusCode >= HttpStatus.internalServerError) {
+      throw ServerException('Server error with code $statusCode');
+    } else {
+      throw UnknownException('Unhandled status code $statusCode');
     }
   }
 }
