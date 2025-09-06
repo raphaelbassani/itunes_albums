@@ -26,6 +26,20 @@ A **Flutter** application that consumes the **iTunes RSS API** and displays the 
 
 ## Architecture
 
+### MVVM (Model-View-ViewModel)
+
+This project follows the **MVVM pattern** to ensure a clear separation of concerns:
+
+- **Model** → Represents the data layer (API responses, entities, repositories).
+- **View** → Flutter UI widgets (pages and widgets) that render the state.
+- **ViewModel** → Holds business logic and application state using Riverpod's `StateNotifier`.
+
+This ensures:
+* Views remain declarative and free of business logic.
+* ViewModels are easily testable in isolation.
+* Models are clean representations of the data and domain rules.
+
+
 This project follows **Clean Code**, **SOLID principles**, and **Domain-Driven Design (DDD)**:
 
 * **Clean Code**: Modular folder structure, readable names, single responsibility per class, and clear separation of concerns.
