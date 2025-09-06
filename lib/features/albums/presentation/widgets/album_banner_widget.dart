@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/ui/ui_cached_network_image.dart';
 import '../../../../core/ui/ui_dimens.dart';
+import '../../../../core/ui/ui_gesture_detector.dart';
 import '../../../../core/ui/ui_text.dart';
 import '../../../../core/ui/ui_title.dart';
 import '../../data/models/album_model.dart';
@@ -20,25 +21,22 @@ class AlbumBannerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: UIPaddingHorizontal.lg + UIPaddingVertical.sm,
-      child: GestureDetector(
+      child: UIGestureDetector(
         onTap: () => onSelected(album),
-        child: Container(
-          color: Colors.transparent,
-          child: Row(
-            children: [
-              Hero(
-                tag: '${album.name}-img',
-                child: UICachedNetworkImage(imageUrl: album.artUrl),
+        child: Row(
+          children: [
+            Hero(
+              tag: '${album.name}-img',
+              child: UICachedNetworkImage(imageUrl: album.artUrl),
+            ),
+            UISpacingInLine.df,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [UITitle(album.name), UIText(album.artistName)],
               ),
-              UISpacingInLine.df,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [UITitle(album.name), UIText(album.artistName)],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class UITitle extends StatelessWidget {
   final String text;
-  const UITitle(this.text, {super.key});
+  final Color? color;
+
+  const UITitle(this.text, {this.color, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +12,8 @@ class UITitle extends StatelessWidget {
       text,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: color ?? Colors.black,
         fontWeight: FontWeight.bold,
         fontSize: 14,
         fontFamily: 'Poppins',

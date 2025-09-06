@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/enums/slide_direction_enum.dart';
+import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/ui/enums/ui_nav_button_state.dart';
 import '../../../../core/ui/ui_app_bar.dart';
 import '../../../../core/ui/ui_cached_network_image.dart';
@@ -171,7 +172,7 @@ class _AlbumPageState extends State<AlbumPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    contentSpacing = MediaQuery.of(context).size.width;
+    contentSpacing = context.width;
     return Scaffold(
       appBar: const UIAppBar(hasLeading: true),
       body: Stack(
@@ -220,7 +221,7 @@ class _DetailContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
+    final double width = context.width;
     final Matrix4 transform = Matrix4.translationValues(dx * 1.2, 0.0, 0.0);
 
     return ListView(
