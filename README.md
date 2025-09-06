@@ -17,7 +17,7 @@ A **Flutter** application that consumes the **iTunes RSS API** and displays the 
 
 ## 📸 Screenshots
 
-| <img src="assets/screenshots/img.png" alt="drawing" width="150"/>                | <img src="assets/screenshots/img_1.png" alt="drawing" width="150"/> |
+| <img src="assets/screenshots/img.png" alt="drawing" width="150"/>                | <img src="assets/screenshots/img_1.png" alt="drawing" width="160"/> |
 |----------------------------------------------------------------------------------|---------------------------------------------------------------------|
 
 
