@@ -14,6 +14,14 @@ A **Flutter** application that consumes the **iTunes RSS API** and displays the 
 * Error handling with retry button.
 * Fully tested with +70 **unit** and **widget** tests.
 
+
+## 📸 Screenshots
+
+| <img src="assets/screenshots/img.png" alt="drawing" width="150"/>                | <img src="assets/screenshots/img_1.png" alt="drawing" width="150"/> |
+|----------------------------------------------------------------------------------|---------------------------------------------------------------------|
+
+
+
 ## Technologies & Packages
 
 * **Flutter** 3.35.2
