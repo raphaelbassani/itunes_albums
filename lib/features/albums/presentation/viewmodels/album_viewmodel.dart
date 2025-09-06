@@ -1,8 +1,8 @@
 import 'package:riverpod/riverpod.dart';
 
 import '../../../../core/enums/view_model_status.dart';
+import '../../data/models/album_state.dart';
 import '../../data/repositories/album_repository.dart';
-import '../../domain/entities/album_state.dart';
 
 class AlbumViewModel extends StateNotifier<AlbumState> {
   final AlbumRepository repository;

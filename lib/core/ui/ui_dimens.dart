@@ -7,7 +7,7 @@ class _UIDimens {
   static const double lg = 24;
 }
 
-class UIPaddings {
+class UIPadding {
   static const df = EdgeInsets.all(_UIDimens.df);
 }
 

@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../data/datasources/album_remote_datasource.dart';
+import '../data/models/album_state.dart';
 import '../data/repositories/album_repository.dart';
-import '../domain/entities/album_state.dart';
 import '../presentation/viewmodels/album_viewmodel.dart';
 
 final dioProvider = Provider<Dio>((ref) => Dio());

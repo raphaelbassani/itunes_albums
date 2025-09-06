@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/ui/ui_cached_network_image.dart';
 import '../../../../core/ui/ui_dimens.dart';
 import '../../../../core/ui/ui_text.dart';
 import '../../../../core/ui/ui_title.dart';
-import '../../domain/entities/album_model.dart';
+import '../../data/models/album_model.dart';
 
 class AlbumBannerWidget extends StatelessWidget {
   final AlbumModel album;
@@ -24,23 +25,17 @@ class AlbumBannerWidget extends StatelessWidget {
         child: Container(
           color: Colors.transparent,
           child: Row(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Hero(
-                  tag: '${album.name}-img',
-                  child: Image.asset(
-                    album.artUrl,
-                    fit: BoxFit.cover,
-                    height: 60.0,
-                    width: 60.0,
-                  ),
-                ),
+            children: [
+              Hero(
+                tag: '${album.name}-img',
+                child: UICachedNetworkImage(imageUrl: album.artUrl),
               ),
               UISpacingInLine.df,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [UITitle(album.name), UIText(album.artistName)],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [UITitle(album.name), UIText(album.artistName)],
+                ),
               ),
             ],
           ),

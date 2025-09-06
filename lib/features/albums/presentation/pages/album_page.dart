@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/enums/slide_direction_enum.dart';
 import '../../../../core/ui/enums/ui_nav_button_state.dart';
+import '../../../../core/ui/ui_cached_network_image.dart';
 import '../../../../core/ui/ui_dimens.dart';
 import '../../../../core/ui/ui_nav_button.dart';
 import '../../../../core/ui/ui_subtitle.dart';
 import '../../../../core/ui/ui_title.dart';
-import '../../domain/entities/album_model.dart';
+import '../../data/models/album_model.dart';
 
 class AlbumPage extends StatefulWidget {
   final List<AlbumModel> albumList;
@@ -243,11 +244,10 @@ class _DetailContentWidget extends StatelessWidget {
                   opacity: 1.0 - (dx.abs() / width),
                   child: Hero(
                     tag: '${album.name}-img',
-                    child: Image.asset(
-                      album.artUrl,
-                      fit: BoxFit.cover,
+                    child: UICachedNetworkImage(
+                      imageUrl: album.artUrl,
+                      height: 300,
                       width: width * 0.9,
-                      height: 300.0,
                     ),
                   ),
                 ),

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/enums/view_model_status.dart';
-import '../../data/errors/failures.dart';
+import '../errors/failures.dart';
 import 'album_model.dart';
 
 class AlbumState extends Equatable {

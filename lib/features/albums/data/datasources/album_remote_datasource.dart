@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import '../../domain/entities/album_model.dart';
 import '../errors/exceptions.dart';
+import '../models/album_model.dart';
 
 class AlbumRemoteDatasource {
   final Dio dio;
@@ -18,9 +19,12 @@ class AlbumRemoteDatasource {
       final response = await dio.get(_baseUrl);
 
       if (response.statusCode == HttpStatus.ok) {
-        if (response.data is Map<String, dynamic>) {
-          final List<dynamic> entries = response.data['feed']?['entry'] ?? [];
+        final data = response.data is String
+            ? jsonDecode(response.data)
+            : response.data;
 
+        if (data is Map<String, dynamic> && data['feed']?['entry'] is List) {
+          final List entries = data['feed']?['entry'] ?? [];
           return entries
               .map((e) => AlbumModel.fromJson(e as Map<String, dynamic>))
               .toList();

@@ -1,9 +1,9 @@
 import 'package:dart_either/dart_either.dart';
 
-import '../../domain/entities/album_model.dart';
 import '../datasources/album_remote_datasource.dart';
 import '../errors/exceptions.dart';
 import '../errors/failures.dart';
+import '../models/album_model.dart';
 
 class AlbumRepository {
   final AlbumRemoteDatasource remoteDatasource;

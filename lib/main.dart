@@ -6,7 +6,8 @@ import 'core/extensions/fade_navigation.dart';
 import 'core/ui/ui_app_bar_title.dart';
 import 'core/ui/ui_dimens.dart';
 import 'features/albums/data/errors/failures.dart';
-import 'features/albums/domain/entities/album_model.dart';
+import 'features/albums/data/models/album_model.dart';
+import 'features/albums/data/models/album_state.dart';
 import 'features/albums/presentation/pages/album_page.dart';
 import 'features/albums/presentation/widgets/album_banner_widget.dart';
 import 'features/albums/providers/providers.dart';
@@ -94,27 +95,13 @@ class _HomePageState extends ConsumerState<HomePage>
       ),
       body: RefreshIndicator(
         onRefresh: refresh,
-        child: Column(
-          children: [
+        child: CustomScrollView(
+          slivers: [
             if (state.status.isLoading) const _LoadingWidget(),
             if (state.status.isFailure)
               _FailureWidget(failure: state.failure, onRetry: refresh),
             if (state.status.isSuccess)
-              ListView(
-                children: <Widget>[
-                  UISpacingStack.sm,
-                  Column(
-                    children: state.albums.map((album) {
-                      return AlbumBannerWidget(
-                        album: album,
-                        onSelected: (selected) =>
-                            onSelected(selected, state.albums),
-                      );
-                    }).toList(),
-                  ),
-                  UISpacingStack.lg,
-                ],
-              ),
+              _AlbumsListWidget(onSelected: onSelected, state: state),
           ],
         ),
       ),
@@ -126,28 +113,48 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 }
 
+class _AlbumsListWidget extends StatelessWidget {
+  final Function(AlbumModel, List<AlbumModel> albumList) onSelected;
+  final AlbumState state;
+
+  const _AlbumsListWidget({required this.onSelected, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate((context, index) {
+          final album = state.albums[index];
+          return AlbumBannerWidget(
+            album: album,
+            onSelected: (selected) => onSelected(selected, state.albums),
+          );
+        }, childCount: state.albums.length),
+      ),
+    );
+  }
+}
+
 class _LoadingWidget extends StatelessWidget {
   const _LoadingWidget();
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 5,
-      padding: const EdgeInsets.all(16),
-      itemBuilder: (context, index) {
-        return Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        childCount: 15,
+        (context, index) => Shimmer.fromColors(
+          baseColor: Colors.pink,
+          highlightColor: Colors.pink,
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
+            margin: UIPaddingVertical.sm,
             height: 100,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
@@ -160,22 +167,28 @@ class _FailureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            failure?.message ?? 'Unknown error',
-            style: const TextStyle(color: Colors.red, fontSize: 16),
-            textAlign: TextAlign.center,
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Padding(
+        padding: UIPadding.df,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                failure?.message ?? 'Unknown error',
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: onRetry,
+                icon: const Icon(Icons.refresh),
+                label: const Text('Retry'),
+              ),
+            ],
           ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
-          ),
-        ],
+        ),
       ),
     );
   }

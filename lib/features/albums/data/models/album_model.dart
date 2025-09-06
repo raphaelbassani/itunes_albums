@@ -20,11 +20,8 @@ class AlbumModel extends Equatable {
   });
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) {
-    final List<dynamic>? imageList = json['im:image'];
-    String artUrl = '';
-    if (imageList != null && imageList.isNotEmpty) {
-      artUrl = imageList.last['label'] as String;
-    }
+    final images = json['im:image'] as List;
+    final artUrl = (images.isNotEmpty ? images.last['label'] as String : '');
 
     final albumName = (json['im:name']?['label'] ?? '') as String;
 
