@@ -4,10 +4,9 @@ class AlbumModel extends Equatable {
   final String artUrl;
   final String name;
   final String artistName;
-  final DateTime releaseDate;
-  final String genre;
-  final int trackCount;
-  final Duration totalDuration;
+  final DateTime? releaseDate;
+  final String? genre;
+  final int? trackCount;
 
   const AlbumModel({
     required this.artUrl,
@@ -16,8 +15,16 @@ class AlbumModel extends Equatable {
     required this.releaseDate,
     required this.genre,
     required this.trackCount,
-    required this.totalDuration,
   });
+
+  String? get formattedReleaseDate => releaseDate != null
+      ? '${releaseDate!.day.toString().padLeft(2, '0')}/'
+            '${releaseDate!.month.toString().padLeft(2, '0')}/'
+            '${releaseDate!.year}'
+      : null;
+
+  String? get formattedTrackCount =>
+      trackCount != null && trackCount! > 0 ? trackCount.toString() : null;
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) {
     final images = json['im:image'] as List;
@@ -27,37 +34,27 @@ class AlbumModel extends Equatable {
 
     final artistName = (json['im:artist']?['label'] ?? '') as String;
 
-    DateTime parsedRelease =
-        DateTime.tryParse(
-          (json['im:releaseDate']?['label'] as String?) ?? '',
-        ) ??
-        DateTime.fromMillisecondsSinceEpoch(0);
+    DateTime? releaseDate = DateTime.tryParse(
+      (json['im:releaseDate']?['label'] as String?) ?? '',
+    );
 
-    final genre = (json['category']?['attributes']?['label'] ?? '') as String;
+    final genre = (json['category']?['attributes']?['label'] ?? '') as String?;
 
-    int count = 0;
-    final trackCountStr =
+    int trackCount = 0;
+    final count =
         (json['im:itemCount']?['label'] ?? json['im:trackCount']?['label'])
             as String?;
-    if (trackCountStr != null) {
-      count = int.tryParse(trackCountStr) ?? 0;
-    }
-
-    Duration totalDur = Duration.zero;
-    final durationStr = json['link']?['attributes']?['duration'] as String?;
-    if (durationStr != null) {
-      final seconds = int.tryParse(durationStr) ?? 0;
-      totalDur = Duration(seconds: seconds);
+    if (count != null) {
+      trackCount = int.tryParse(count) ?? 0;
     }
 
     return AlbumModel(
       artUrl: artUrl,
       name: albumName,
       artistName: artistName,
-      releaseDate: parsedRelease,
+      releaseDate: releaseDate,
       genre: genre,
-      trackCount: count,
-      totalDuration: totalDur,
+      trackCount: count != null ? trackCount : null,
     );
   }
 
@@ -69,6 +66,5 @@ class AlbumModel extends Equatable {
     releaseDate,
     genre,
     trackCount,
-    totalDuration,
   ];
 }

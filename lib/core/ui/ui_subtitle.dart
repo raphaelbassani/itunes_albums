@@ -8,7 +8,7 @@ class UISubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      maxLines: 5,
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(
         color: Colors.black54,

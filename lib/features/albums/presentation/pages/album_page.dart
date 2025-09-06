@@ -6,6 +6,7 @@ import '../../../../core/ui/ui_cached_network_image.dart';
 import '../../../../core/ui/ui_dimens.dart';
 import '../../../../core/ui/ui_nav_button.dart';
 import '../../../../core/ui/ui_subtitle.dart';
+import '../../../../core/ui/ui_text.dart';
 import '../../../../core/ui/ui_title.dart';
 import '../../data/models/album_model.dart';
 
@@ -264,14 +265,34 @@ class _DetailContentWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 UITitle(album.name),
-                UISpacingStack.xs,
-                UISubtitle(album.artistName),
+                UISpacingStack.xxs,
+                UIText(album.artistName),
                 UISpacingStack.sm,
-                const UISubtitle('Descricao do album'),
+                _DetailWidget(album: album),
               ],
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _DetailWidget extends StatelessWidget {
+  final AlbumModel album;
+
+  const _DetailWidget({required this.album});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (album.formattedReleaseDate != null)
+          UISubtitle('Release date: ${album.formattedReleaseDate}'),
+        if (album.genre != null) UISubtitle('Genre: ${album.genre}'),
+        if (album.formattedTrackCount != null)
+          UISubtitle('Tracks: ${album.formattedTrackCount}'),
       ],
     );
   }

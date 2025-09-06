@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class _UIDimens {
+  static const double xxs = 2;
   static const double xs = 4;
   static const double sm = 8;
   static const double df = 16;
@@ -31,6 +32,7 @@ class UIPaddingBottom {
 }
 
 class UISpacingStack {
+  static const xxs = SizedBox(height: _UIDimens.xxs);
   static const xs = SizedBox(height: _UIDimens.xs);
   static const sm = SizedBox(height: _UIDimens.sm);
   static const df = SizedBox(height: _UIDimens.df);
