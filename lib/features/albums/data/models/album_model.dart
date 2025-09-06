@@ -38,7 +38,7 @@ class AlbumModel extends Equatable {
       (json['im:releaseDate']?['label'] as String?) ?? '',
     );
 
-    final genre = (json['category']?['attributes']?['label'] ?? '') as String?;
+    final genre = (json['category']?['attributes']?['label']) as String?;
 
     int trackCount = 0;
     final count =
