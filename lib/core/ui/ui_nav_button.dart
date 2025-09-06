@@ -26,7 +26,7 @@ class UINavButton extends StatelessWidget {
           shape: const BeveledRectangleBorder(),
           splashFactory: InkRipple.splashFactory,
         ),
-        onPressed: onPressed,
+        onPressed: state.isEnabled ? onPressed : null,
         child: Icon(icon, color: Colors.white),
       ),
     );
