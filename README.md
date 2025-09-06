@@ -1,8 +1,6 @@
 # iTunes Albums Flutter App
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue.svg)](https://flutter.dev/)
-[![Build](https://img.shields.io/github/actions/workflow/status/your-username/itunes_albums_flutter/flutter.yml?branch=main)](https://github.com/your-username/itunes_albums_flutter/actions)
-[![Coverage](https://img.shields.io/badge/coverage-0%25-red.svg)](https://github.com/your-username/itunes_albums_flutter)
+[![Flutter](https://img.shields.io/badge/Flutter-3.35.2-blue.svg)](https://flutter.dev/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 A **Flutter** application that consumes the **iTunes RSS API** and displays the **Top 100 Albums** in an interactive, animated UI.
@@ -14,15 +12,11 @@ A **Flutter** application that consumes the **iTunes RSS API** and displays the 
 * Pull-to-refresh functionality.
 * Skeleton loading animations using **Shimmer**.
 * Error handling with retry button.
-* Fully tested with **unit**, **widget**, and **integration tests**.
-
-## Screenshots
-
-*Add screenshots of your app here.*
+* Fully tested with +70 **unit** and **widget** tests.
 
 ## Technologies & Packages
 
-* **Flutter 3.x**
+* **Flutter 3.35.2
 * **Riverpod** for state management
 * **Shimmer** for loading skeletons
 * **CachedNetworkImage** for cached image loading
@@ -36,13 +30,17 @@ This project uses the **MVVM** architecture with a modular folder structure:
 
 ```
 lib/
-├─ core/           # Extensions, enums, generic UI components
+├─ core/          
+│  └─ enums/        # view model status, slide direction
+│  └─ extensions/   # context, navigation
+│  └─ ui/           # All reusable ui widgets
 ├─ features/
 │  └─ albums/
-│     ├─ data/     # Models, Repositories, Errors
-│     ├─ providers # State management with Riverpod
+│     ├─ data/      # Datasources, Errors, Models, Repositories
+│     ├─ providers/  # State management with Riverpod
 │     ├─ presentation/
 │     │  ├─ pages/   # HomePage, AlbumPage
+│     │  ├─ viewmodels/   # AlbumViewModel
 │     │  └─ widgets/ # Reusable UI widgets
 ```
 
@@ -80,16 +78,14 @@ Run all tests (unit, widget, integration):
 
 ```bash
 flutter test
-flutter test integration_test
 ```
 
 Test folder structure:
 
 ```
 test/
-├─ unit/        # Logic and providers
-├─ widget/      # UI/widget tests
-└─ integration/ # Full workflow tests
+├─ core/        # Enums, Extenions and all UI widgets 
+└─ features/      # DataSources, Models, Repositories, Pages, ViewModels and Widgets
 ```
 
 ## Contributing
