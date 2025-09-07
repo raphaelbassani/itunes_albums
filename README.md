@@ -26,7 +26,7 @@ A **Flutter** application that consumes the **iTunes RSS API** and displays the 
 
 * **Flutter** 3.35.2
 * **Riverpod** for state management
-* **Dio** for requests
+* **Dio** for remote requests
 * **Shimmer** for loading skeletons
 * **CachedNetworkImage** for cached image loading
 * **mocktail** for mocking dependencies in tests
