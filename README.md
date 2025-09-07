@@ -67,13 +67,13 @@ This project follows **Clean Code**, **SOLID principles**, and **Domain-Driven D
 ```
 lib/
 ├─ core/          
-│  └─ enums/        # view model status, slide direction
-│  └─ extensions/   # context, navigation
-│  └─ ui/           # All reusable UI widgets
+│  └─ enums/        # ViewModelStatus, SlideDirection
+│  └─ extensions/   # Context, Navigation
+│  └─ ui/           # Reusable UI Widgets
 ├─ features/
 │  └─ albums/
 │     ├─ data/      # Datasources, Errors, Models, Repositories
-│     ├─ providers/  # State management with Riverpod
+│     ├─ providers/  # State Management with Riverpod
 │     ├─ presentation/
 │     │  ├─ pages/   # HomePage, AlbumPage
 │     │  ├─ viewmodels/   # AlbumViewModel
