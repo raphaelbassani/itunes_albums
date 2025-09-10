@@ -14,3 +14,7 @@ class ServerFailure extends Failure {
 class NotFoundFailure extends Failure {
   const NotFoundFailure([super.message = 'Requested resource was not found']);
 }
+
+class ParseFailure extends Failure {
+  const ParseFailure([super.message = 'Error trying to parse on repository.']);
+}

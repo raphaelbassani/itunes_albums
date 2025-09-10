@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 
 import '../errors/exceptions.dart';
-import '../models/album_model.dart';
 
 class AlbumRemoteDatasource {
   final Dio dio;
@@ -14,20 +12,13 @@ class AlbumRemoteDatasource {
   static const _baseUrl =
       'https://itunes.apple.com/us/rss/topalbums/limit=100/json';
 
-  Future<List<AlbumModel>> fetchTopAlbums() async {
+  Future<String> fetchTopAlbums() async {
     try {
       final response = await dio.get(_baseUrl);
 
       if (response.statusCode == HttpStatus.ok) {
-        final data = response.data is String
-            ? jsonDecode(response.data)
-            : response.data;
-
-        if (data is Map<String, dynamic> && data['feed']?['entry'] is List) {
-          final List entries = data['feed']?['entry'] ?? [];
-          return entries
-              .map((e) => AlbumModel.fromJson(e as Map<String, dynamic>))
-              .toList();
+        if (response.data is String) {
+          return response.data;
         } else {
           throw UnknownException('Invalid response format');
         }
